@@ -11,6 +11,7 @@ namespace NetcodePlayground
         [SerializeField] private Button _hostButton;
         [SerializeField] private Button _clientButton;
         [SerializeField] private TMP_Text _statusLabel;
+        [SerializeField] private GameObject _crosshair;
 
         void OnEnable()
         {
@@ -53,6 +54,7 @@ namespace NetcodePlayground
             {
                 SetStartButtons(false);
                 UpdateStatusLabels();
+                _crosshair.SetActive(true);
             }
         }
 
