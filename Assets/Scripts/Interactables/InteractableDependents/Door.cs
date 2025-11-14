@@ -14,7 +14,7 @@ namespace NetcodePlayground.Interactables
             _isOpenHash = Animator.StringToHash("Open");
         }
 
-        protected override void OnInteract(bool on)
+        public override void OnInteract(bool on)
         {
             _animator.SetBool(_isOpenHash, on);
         }

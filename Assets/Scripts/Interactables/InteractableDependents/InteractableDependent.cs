@@ -7,19 +7,6 @@ namespace NetcodePlayground.Interactables
     public abstract class InteractableDependent : MonoBehaviour
     {
 
-        private InteractableBase _interactable;
-
-        public void SetInteractable(InteractableBase interactable)
-        {
-            _interactable = interactable;
-            _interactable.OnInteracted += OnInteract;
-        }
-
-        private void OnDisable()
-        {
-            _interactable.OnInteracted -= OnInteract;
-        }
-
-        protected abstract void OnInteract(bool on);
+        public abstract void OnInteract(bool on);
     }
 }

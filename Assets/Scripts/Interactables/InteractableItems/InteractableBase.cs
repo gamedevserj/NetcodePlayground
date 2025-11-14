@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NetcodePlayground.Interactables
 {
-    public class InteractableBase : NetworkBehaviour
+    public abstract class InteractableBase : NetworkBehaviour
     {
 
         [SerializeField] protected Animator _animator;
@@ -14,6 +14,8 @@ namespace NetcodePlayground.Interactables
         protected readonly NetworkVariable<bool> _isOn = new NetworkVariable<bool>();
 
         protected int _isOnHash;
+
+        public bool IsOn => _isOn.Value;
 
         private void Start()
         {
