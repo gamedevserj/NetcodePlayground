@@ -167,7 +167,7 @@ namespace NetcodePlayground.Player
         {
             _canRotate = !_canRotate;
             Cursor.visible = !_canRotate;
-            //Cursor.lockState = _canRotate ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.lockState = _canRotate ? CursorLockMode.Locked : CursorLockMode.None;
 
         }
     }
