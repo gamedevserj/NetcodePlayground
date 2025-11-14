@@ -30,6 +30,9 @@ namespace NetcodePlayground.Player
         private float _animatedSpeed;
         private float _currentAnimatedSpeed;
 
+        // just make switching to different window easier
+        private bool _canRotate = true;
+
         public bool IsMoving => !Mathf.Approximately(_moveDirection.magnitude, 0);
         public bool IsGrounded => _controller.isGrounded;
 
@@ -53,6 +56,7 @@ namespace NetcodePlayground.Player
             var camera = GameObject.FindWithTag("MainCamera").GetComponent<CameraController>();
             camera.TargetTransform = _cameraTransform;
             _stateMachine = new PlayerStateMachine(this);
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void FixedUpdate()
@@ -76,6 +80,7 @@ namespace NetcodePlayground.Player
             Transform.rotation = Quaternion.Euler(new Vector3(0, _lastRotation.x, 0));
             var clampedRotation = Mathf.Clamp(-_lastRotation.y, _rotationLimitsX.x, _rotationLimitsX.y);
             _cameraTransform.rotation = Quaternion.Euler(new Vector3(clampedRotation, _lastRotation.x, 0));
+
             _controller.Move(_velocity * Time.fixedDeltaTime);
 
             var targetSpeed = horizontalVelocity.magnitude * Mathf.Sign(_moveDirection.y);
@@ -123,7 +128,10 @@ namespace NetcodePlayground.Player
 
         public void Look(Vector2 rotationAmount)
         {
-            _lastRotation += _rotationSpeed * Time.fixedDeltaTime * rotationAmount;
+            if (_canRotate)
+            {
+                _lastRotation += _rotationSpeed * Time.fixedDeltaTime * rotationAmount;
+            }
         }
 
         public void InputJump(InputAction.CallbackContext context)
@@ -153,6 +161,14 @@ namespace NetcodePlayground.Player
             {
                 interactable.Interact();
             }
+        }
+
+        public void InputCanRotate(InputAction.CallbackContext context)
+        {
+            _canRotate = !_canRotate;
+            Cursor.visible = !_canRotate;
+            //Cursor.lockState = _canRotate ? CursorLockMode.Locked : CursorLockMode.None;
+
         }
     }
 }
